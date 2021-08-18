@@ -4,7 +4,8 @@
   "description": "A form framework powered by react and mobx",
   "main": "lib/index.js",
   "scripts": {
-    "test": "yarn test"
+    "start": "start-storybook -p 7007",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

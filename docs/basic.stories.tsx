@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocalObservable } from 'mobx-react-lite';
 import { Form, FormItem, FormModel } from 'mobx-form';
+import { FormValuePreview } from './helpers';
 
 export default {
   title: 'MobxForm/Basic',
@@ -20,6 +22,84 @@ export function Basic() {
       <Form.Submit />
       &nbsp;&nbsp;
       <Form.Reset />
+
+      <FormValuePreview />
     </Form>
   );
 }
+
+export function Nested() {
+  return (
+    <Form>
+      <FormItem component="input" label="foo.bar.buzz" name="foo.bar.buzz" required />
+      <FormValuePreview />
+    </Form>
+  );
+}
+
+const ALL_CITIES = [
+  { prov: '浙江', cities: '杭州 绍兴 宁波 其他'.split(' ') },
+  { prov: '江苏', cities: '南京 Sz 无锡 其他'.split(' ') },
+  { prov: '山东', cities: '济南 青岛 其他'.split(' ') },
+];
+
+export function BasicEffect() {
+  const model = useLocalObservable(
+    () =>
+      new FormModel({
+        prov: '浙江',
+        cities: ['杭州', '绍兴'],
+      }),
+  );
+  const prov = model.getField('prov');
+  const cities = model.getField('cities');
+
+  return (
+    <Form model={model}>
+      <FormItem
+        component="singleSelect"
+        label="prov"
+        field={prov}
+        componentProps={{ dataSource: ALL_CITIES.map((item) => item.prov) }}
+      />
+      <FormItem
+        component="multipleSelect"
+        label="city"
+        field={cities}
+        componentProps={{
+          dataSource: ALL_CITIES.find((item) => {
+            return item.prov === prov.value;
+          }).cities,
+          hasClear: true,
+        }}
+      />
+      <Form.Effect
+        watch={prov}
+        effect={() => {
+          cities.value = [];
+        }}
+      />
+      <FormValuePreview />
+    </Form>
+  );
+}
+
+export function TupleField() {
+  const [model] = useState(
+    () =>
+      new FormModel({
+        start: '',
+        end: '',
+        dateRange: ['', ''],
+      }),
+  );
+
+  return (
+    <Form model={model}>
+      <FormItem label="tuple1" component="rangePicker" field={model.getTupleField('start', 'end')} />
+      <FormItem label="tuple2" component="rangePicker" name="dateRange" />
+      <FormValuePreview />
+    </Form>
+  );
+}
+

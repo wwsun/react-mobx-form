@@ -1,7 +1,7 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  stories: ['../docs/story/**/*.stories.tsx', '../docs/story/**/*.stories.tsx'],
+  stories: ['../docs/**/*.stories.tsx', '../docs/**/*.stories.tsx'],
 
   babel: async (config) => {
     config.plugins.push('babel-plugin-styled-components');
