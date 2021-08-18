@@ -7,7 +7,7 @@ function renderBooleanPreview(props: any) {
 }
 
 function renderEmptyPreview(props: any) {
-  return null;
+  return null as React.ReactElement;
 }
 
 function isFalsy(value: any) {
