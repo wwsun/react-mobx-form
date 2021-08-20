@@ -39,7 +39,7 @@ export function Nested() {
 
 const ALL_CITIES = [
   { prov: '浙江', cities: '杭州 绍兴 宁波 其他'.split(' ') },
-  { prov: '江苏', cities: '南京 Sz 无锡 其他'.split(' ') },
+  { prov: '江苏', cities: '南京 苏州 无锡 其他'.split(' ') },
   { prov: '山东', cities: '济南 青岛 其他'.split(' ') },
 ];
 
