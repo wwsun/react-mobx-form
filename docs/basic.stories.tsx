@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocalObservable } from 'mobx-react-lite';
-import { Form, FormItem, FormModel } from 'mobx-form';
+import { Form, FormItem, FormModel } from '@nupt/react-mobx-form';
 import { FormValuePreview } from './helpers';
 
 export default {
@@ -102,4 +102,3 @@ export function TupleField() {
     </Form>
   );
 }
-
