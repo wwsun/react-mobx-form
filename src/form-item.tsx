@@ -1,12 +1,11 @@
+import React, { useLayoutEffect, useEffect } from 'react';
 import { runInAction, toJS } from 'mobx';
-import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { pick } from 'lodash';
 import { composeValue } from './utils';
 import { useFormEnv, useModel } from './form';
 import { Field, FieldConfig, FormModel } from './models';
-import { useLayoutEffect } from 'react';
-import { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+
 import { ALL_COMPONENTS } from './components';
 import { FormItemView } from './form-ui';
 

@@ -88,7 +88,32 @@ class IdGenerator {
   }
 }
 
-export class FormModel<D extends { [key: string]: any } = unknown> implements FormModel<D> {
+export interface IModel<D = unknown> {
+  readonly root: FormModel;
+  readonly path: string[];
+  readonly parent: IModel;
+
+  state: any;
+
+  values: D;
+
+  getValue<N extends XName<D>>(name: N, defaultValue?: ResolveXName<D, N>): ResolveXName<D, N>;
+  setValue<N extends XName<D>>(name: N, value: ResolveXName<D, N>): void;
+  // getSubModel<N extends XName<D>>(name: N): SubModel<ResolveXName<D, N>>;
+
+  // getField<N extends XName<D>>(name: N): Field<ResolveXName<D, N>>;
+
+  // getTupleField<NS extends (keyof D & string)[]>(
+  //   ...tupleParts: NS
+  // ): Field<{ [Index in keyof NS]: NS[Index] extends keyof D ? D[NS[Index]] : never }>;
+
+  // // internals
+  // readonly _proxy: SubModelProxy;
+
+  // _asField(): Field<D>;
+}
+
+export class FormModel<D extends { [key: string]: any } = unknown> implements IModel<D> {
   _modelIdGenerator: IdGenerator;
   _fieldIdGenerator: IdGenerator;
 

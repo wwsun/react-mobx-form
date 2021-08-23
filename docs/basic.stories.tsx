@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocalObservable } from 'mobx-react-lite';
+import { Observer } from 'mobx-react-lite';
 import { Form, FormItem, FormModel } from '@nupt/react-mobx-form';
 import { FormValuePreview } from './helpers';
 
@@ -22,7 +22,6 @@ export function Basic() {
       <Form.Submit />
       &nbsp;&nbsp;
       <Form.Reset />
-
       <FormValuePreview />
     </Form>
   );
@@ -43,44 +42,50 @@ const ALL_CITIES = [
   { prov: '山东', cities: '济南 青岛 其他'.split(' ') },
 ];
 
+const model2 = new FormModel({
+  prov: '浙江',
+  cities: ['杭州', '绍兴'],
+});
+
 export function BasicEffect() {
-  const model = useLocalObservable(
-    () =>
-      new FormModel({
-        prov: '浙江',
-        cities: ['杭州', '绍兴'],
-      }),
-  );
-  const prov = model.getField('prov');
-  const cities = model.getField('cities');
+  const prov = model2.getField('prov');
+  const cities = model2.getField('cities');
 
   return (
-    <Form model={model}>
-      <FormItem
-        component="singleSelect"
-        label="prov"
-        field={prov}
-        componentProps={{ dataSource: ALL_CITIES.map((item) => item.prov) }}
-      />
-      <FormItem
-        component="multipleSelect"
-        label="city"
-        field={cities}
-        componentProps={{
-          dataSource: ALL_CITIES.find((item) => {
-            return item.prov === prov.value;
-          }).cities,
-          hasClear: true,
-        }}
-      />
-      <Form.Effect
-        watch={prov}
-        effect={() => {
-          cities.value = [];
-        }}
-      />
-      <FormValuePreview />
-    </Form>
+    <Observer>
+      {() => (
+        <Form model={model2}>
+          <FormItem
+            component="singleSelect"
+            label="prov"
+            field={prov}
+            componentProps={{ dataSource: ALL_CITIES.map((item) => item.prov) }}
+          />
+          <FormItem
+            component="multipleSelect"
+            label="city"
+            field={cities}
+            componentProps={{
+              dataSource: ALL_CITIES.find((item) => {
+                console.log('>>> data', prov.value);
+                return item.prov === prov.value;
+              }).cities,
+              hasClear: true,
+              onVisibleChange() {
+                console.log('>>>', prov.value);
+              },
+            }}
+          />
+          <Form.Effect
+            watch={prov}
+            effect={() => {
+              cities.value = [];
+            }}
+          />
+          <FormValuePreview />
+        </Form>
+      )}
+    </Observer>
   );
 }
 
