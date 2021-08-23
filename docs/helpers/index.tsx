@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormModel, useModel } from '@nupt/react-mobx-form';
+import { FormModel, useModel } from 'mobx-react-lite-form';
 import { toJS } from 'mobx';
 import ReactJson from 'react-json-view';
 import { observer } from 'mobx-react-lite';

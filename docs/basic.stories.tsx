@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Observer } from 'mobx-react-lite';
-import { Form, FormItem, FormModel } from '@nupt/react-mobx-form';
+import { Form, FormItem, FormModel } from 'mobx-react-lite-form';
 import { FormValuePreview } from './helpers';
 
 export default {

@@ -1,6 +1,6 @@
 {
-  "name": "@nupt/react-mobx-form",
-  "version": "1.0.0",
+  "name": "mobx-react-lite-form",
+  "version": "0.1.0",
   "description": "A form framework powered by react and mobx",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
